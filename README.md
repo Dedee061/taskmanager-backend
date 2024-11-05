@@ -1,6 +1,6 @@
 ## API TASK MANAGER
 
-Api Desenvolvida para um Projeto de Gerenciador de Tarefas
+**Api Developed for a Task Manager Project**
 
 ```js
 // route to list all api
