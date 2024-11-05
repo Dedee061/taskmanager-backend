@@ -14,6 +14,6 @@ localhost:8000/tasks
 
 // route to delete tasks by id
 DELETE
-localhost:8000/tasks
+localhost:8000/tasks:id
 
 ```
