@@ -3,7 +3,18 @@
 Api Desenvolvida para um Projeto de Gerenciador de Tarefas
 
 ```js
-// rota para lista todas as api
+// **route to list all api**
+GET 
+localhost:8000/tasks
 
-/tasks
+// 
+**route to create new task**
+POST
+localhost:8000/tasks
+// **Remember to pass the description and isCompleted**
+
+// **route to delete tasks by id**
+DELETE
+localhost:8000/tasks
+
 ```
