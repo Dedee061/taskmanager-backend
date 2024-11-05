@@ -10,6 +10,12 @@ app.use(express.json());
 
 connectToDataBase();
 
+/*
+----------------------------------------------------------------
+ROUTE TO LIST ALL TASKS
+----------------------------------------------------------------
+*/
+
 app.get("/tasks", async (req, res) => {
     try {
         const task = await TaskModel.find({});
@@ -18,6 +24,33 @@ app.get("/tasks", async (req, res) => {
         res.status(500).send("Error retrieving tasks");
     }
 });
+
+/*
+----------------------------------------------------------------
+ROUTE TO LIST A TASK BY ID
+----------------------------------------------------------------
+*/
+
+app.get("/tasks/:id", async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        const task = await TaskModel.findById(taskId);
+
+        if (!task) {
+            return res.status(404).send("Essa Tarefa nao foi encontrada");
+        }
+
+        return res.status(200).send(task);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+/*
+----------------------------------------------------------------
+ROUTE TO CREATE A TASK
+----------------------------------------------------------------
+*/
 
 app.post("/tasks", async (req, res) => {
     try {
@@ -30,6 +63,12 @@ app.post("/tasks", async (req, res) => {
         res.status(500).send(err.message);
     }
 });
+
+/*
+----------------------------------------------------------------
+ROUTE TO DELETE A TASK
+----------------------------------------------------------------
+*/
 
 app.delete("/tasks/:id", async (req, res) => {
     try {
