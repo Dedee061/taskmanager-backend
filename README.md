@@ -7,8 +7,7 @@
 GET 
 localhost:8000/tasks
 
-// 
-route to create new task
+// route to create new task
 POST
 localhost:8000/tasks
 // Remember to pass the description and isCompleted
