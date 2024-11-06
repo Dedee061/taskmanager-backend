@@ -66,6 +66,41 @@ app.post("/tasks", async (req, res) => {
 
 /*
 ----------------------------------------------------------------
+ROUTE TO UPTADE A TASK BY ID
+----------------------------------------------------------------
+*/
+
+app.patch("/tasks/:id", async (req, res) => {
+    try {
+        const taskId = req.params.id;
+        const taskData = req.body;
+
+        const taskToUpdate = await TaskModel.findById(taskId);
+
+        const allowUpdate = ["isCompleted"];
+
+        const requestUpdate = Object.keys(taskData);
+
+        for (update of requestUpdate) {
+            if (allowUpdate.includes(update)) {
+                taskToUpdate[update] = taskData[update];
+            } else {
+                return res
+                    .status(500)
+                    .send("Um ou mais campos não são editaveis");
+            }
+        }
+
+        await taskToUpdate.save();
+
+        return res.status(200).send(taskToUpdate);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+});
+
+/*
+----------------------------------------------------------------
 ROUTE TO DELETE A TASK
 ----------------------------------------------------------------
 */
