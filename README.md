@@ -2,7 +2,7 @@
 
 **Api Developed for a Task Manager Project**
 
-```json
+```js
 // route to list all task
 GET
 localhost:8000/tasks
