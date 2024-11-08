@@ -1,4 +1,5 @@
 const express = require("express");
+const TaskController = require("../controllers/task.controller");
 const TaskModel = require("../models/task.model");
 
 const router = express.Router();
@@ -9,12 +10,7 @@ ROUTE TO LIST ALL TASKS
 ----------------------------------------------------------------
 */
 router.get("/", async (req, res) => {
-    try {
-        const task = await TaskModel.find({});
-        res.status(200).send(task);
-    } catch (err) {
-        res.status(500).send("Error retrieving tasks");
-    }
+    return new TaskController(req, res).getTasks();
 });
 
 /*
