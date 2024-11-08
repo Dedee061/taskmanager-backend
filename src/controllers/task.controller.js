@@ -55,9 +55,9 @@ class TaskController {
 
             const requestUpdate = Object.keys(taskData);
 
-            for (this.update of requestUpdate) {
-                if (allowUpdate.includes(this.update)) {
-                    taskToUpdate[this.update] = taskData[this.update];
+            for (const update of requestUpdate) {
+                if (allowUpdate.includes(update)) {
+                    taskToUpdate[update] = taskData[update];
                 } else {
                     return this.res
                         .status(500)
