@@ -55,9 +55,9 @@ class TaskController {
 
             const requestUpdate = Object.keys(taskData);
 
-            for (update of requestUpdate) {
-                if (allowUpdate.includes(update)) {
-                    taskToUpdate[update] = taskData[update];
+            for (this.update of requestUpdate) {
+                if (allowUpdate.includes(this.update)) {
+                    taskToUpdate[this.update] = taskData[this.update];
                 } else {
                     return this.res
                         .status(500)
@@ -70,6 +70,26 @@ class TaskController {
             return this.res.status(200).send(taskToUpdate);
         } catch (err) {
             this.res.status(500).send(err.message);
+        }
+    }
+
+    async deleteTask() {
+        try {
+            const taskid = this.req.params.id;
+
+            const taskToDelte = await TaskModel.findById(taskid);
+
+            if (!taskToDelte) {
+                return this.res
+                    .status(404)
+                    .send("Essa Tarefa nao foi encontrada");
+            }
+
+            const deleteTask = await TaskModel.findByIdAndDelete(taskid);
+
+            this.res.status(200).send(deleteTask);
+        } catch (err) {
+            this.res.status(500).send("Error deleting task" + err.message);
         }
     }
 }

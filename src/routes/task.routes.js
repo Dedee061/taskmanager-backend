@@ -50,21 +50,7 @@ ROUTE TO DELETE A TASK
 */
 
 router.delete("/:id", async (req, res) => {
-    try {
-        const taskid = req.params.id;
-
-        const taskToDelte = await TaskModel.findById(taskid);
-
-        if (!taskToDelte) {
-            return res.status(404).send("Essa Tarefa nao foi encontrada");
-        }
-
-        const deleteTask = await TaskModel.findByIdAndDelete(taskid);
-
-        res.status(200).send(deleteTask);
-    } catch (err) {
-        res.status(500).send("Error deleting task" + err.message);
-    }
+    return new TaskController(req, res).deleteTask();
 });
 
 module.exports = router;
