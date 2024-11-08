@@ -14,6 +14,64 @@ class TaskController {
             this.res.status(500).send("Error retrieving tasks");
         }
     }
+
+    async getTaskById() {
+        try {
+            const taskId = this.req.params.id;
+            const task = await TaskModel.findById(taskId);
+
+            if (!task) {
+                return this.res
+                    .status(404)
+                    .send("Essa Tarefa nao foi encontrada");
+            }
+
+            return this.res.status(200).send(task);
+        } catch (err) {
+            this.res.status(500).send(err.message);
+        }
+    }
+
+    async createTask() {
+        try {
+            const newTask = new TaskModel(this.req.body);
+
+            await newTask.save();
+
+            this.res.status(200).send(newTask);
+        } catch (err) {
+            this.res.status(500).send(err.message);
+        }
+    }
+
+    async updateTask() {
+        try {
+            const taskId = this.req.params.id;
+            const taskData = this.req.body;
+
+            const taskToUpdate = await TaskModel.findById(taskId);
+
+            const allowUpdate = ["isCompleted"];
+
+            const requestUpdate = Object.keys(taskData);
+
+            for (update of requestUpdate) {
+                if (allowUpdate.includes(update)) {
+                    taskToUpdate[update] = taskData[update];
+                } else {
+                    return this.res
+                        .status(500)
+                        .send("Um ou mais campos não são editaveis");
+                }
+            }
+
+            await taskToUpdate.save();
+
+            return this.res.status(200).send(taskToUpdate);
+        } catch (err) {
+            this.res.status(500).send(err.message);
+        }
+    }
 }
 
 module.exports = TaskController;
